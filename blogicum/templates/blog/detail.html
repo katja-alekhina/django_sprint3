@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ post.location }}. {{ post.date }}
+{% endblock %}
+
+{% block content %} 
+{% include "blog/post_view.html" with post=post full_text=True%}
+{% endblock %}
