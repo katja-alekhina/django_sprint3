@@ -48,7 +48,7 @@ class Location(BaseModel):
 class Post(BaseModel):
     title = models.CharField(max_length=256, default='-')
     text = models.TextField(verbose_name='Текст')
-    pub_date = models.DateTimeField(verbose_name='Дата и время публикации ',
+    pub_date = models.DateTimeField(verbose_name='Дата и время публикации[]',
                                     help_text='Если установить дату и время в '
                                     'будущем — можно делать отложенные '
                                     'публикации.')
