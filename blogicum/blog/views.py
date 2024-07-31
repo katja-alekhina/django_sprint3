@@ -40,4 +40,3 @@ def category_posts(request, category_slug):
         'category': category,
         'post_list': post_list
     })
-
