@@ -26,7 +26,7 @@ def post_detail(request, post_id):
 
 def category_posts(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
-    if not category.is_published: 
+    if not category.is_published:
         raise Http404("Категория не найдена")
     post_list = Post.objects.filter(category=category).filter(
         created_at__lte=timezone.now(),
