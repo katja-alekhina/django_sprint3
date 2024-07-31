@@ -17,7 +17,8 @@ def index(request):
 
 def post_detail(request, post_id):
     template = 'blog/detail.html'
-    post = get_object_or_404(Post, pk=post_id, is_published=True)
+    post = get_object_or_404(Post, id=post_id, is_published=True,
+                             pub_date__lte=timezone.now())
     if (not post.is_published or post.created_at > timezone.now()
             or not post.category.is_published):
         raise Http404('Публикция не найдена')
