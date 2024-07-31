@@ -26,13 +26,18 @@ def post_detail(request, post_id):
 
 
 def category_posts(request, category_slug):
-    category = get_object_or_404(Category, slug=category_slug)
-    if not category.is_published:
-        raise Http404("Категория не найдена")
-    post_list = Post.objects.filter(category=category).filter(
-        created_at__lte=timezone.now(),
-        is_published=True).order_by('-created_at')
-    return render(request, 'blog/category.html', {
+    template = 'blog/category.html'
+    category = get_object_or_404(Category, slug=category_slug,
+                                 is_published=True)
+    post_list = Post.objects.filter(
+        category=category,
+        pub_date__lte=timezone.now(),
+        is_published=True
+    )
+    if not post_list.exists():
+        raise Http404("Публикации для данной категории не найдены.")
+    return render(request, template, {
         'category': category,
         'post_list': post_list
     })
+
