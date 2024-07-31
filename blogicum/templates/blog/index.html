@@ -1,19 +1,12 @@
 {% extends "base.html" %}
-{% load static %}
-
-{% block title %} Лента записей
+{% block title %}
+  Лента записей
 {% endblock %}
-
-{% block content %} 
-  <h1>Лента записей</h1> 
-  <hr>
-    {% for post in posts %}
-    {% include "blog/post_view.html" with post=post full_text=False%}
-      <a href="{% url 'blog:post_detail' post.id %}">Читать полный текст</a>
-      {% if not forloop.last %}
-        <hr>
-      {% endif %}
-    {% endfor %}
-  </ul>
+{% block content %}
+  <h1 class="mb-5">Лента записей</h1>
+  {% for post in post_list %}
+    <article class="mb-5">  
+      {% include "includes/post_card.html" %}
+    </article>   
+  {% endfor %}
 {% endblock %}
-
