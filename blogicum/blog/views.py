@@ -6,7 +6,7 @@ from django.utils import timezone
 
 def index(request):
     post_list = Post.objects.filter(
-        created_at__lte=timezone.now(),
+        pub_date__lte=timezone.now(),
         is_published=True,
         category__is_published=True
     )[:5]
@@ -17,7 +17,7 @@ def index(request):
 
 def post_detail(request, post_id):
     template = 'blog/detail.html'
-    post = get_object_or_404(Post, pk=post_id)
+    post = get_object_or_404(Post, pk=post_id, is_published=True)
     if (not post.is_published or post.created_at > timezone.now()
             or not post.category.is_published):
         raise Http404('Публикция не найдена')
