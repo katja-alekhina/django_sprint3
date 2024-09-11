@@ -3,13 +3,20 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 
+NUMBER_POSTS = 5
 
-def index(request):
-    post_list = Post.objects.filter(
-        pub_date__lte=timezone.now(),
+
+def get_queryset():
+    return Post.objects.filter(
         is_published=True,
         category__is_published=True
-    )[:5]
+    )
+
+
+def index(request):
+    post_list = get_queryset().filter(
+        pub_date__lte=timezone.now()
+    )[:NUMBER_POSTS]
     context = {'post_list': post_list}
     template = 'blog/index.html'
     return render(request, template, context)
@@ -30,13 +37,10 @@ def category_posts(request, category_slug):
     template = 'blog/category.html'
     category = get_object_or_404(Category, slug=category_slug,
                                  is_published=True)
-    post_list = Post.objects.filter(
+    post_list = get_queryset().filter(
         category=category,
         pub_date__lte=timezone.now(),
-        is_published=True
     )
-    if not post_list.exists():
-        raise Http404("Публикации для данной категории не найдены.")
     return render(request, template, {
         'category': category,
         'post_list': post_list
