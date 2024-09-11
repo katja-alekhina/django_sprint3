@@ -3,7 +3,6 @@ from django.db import models
 
 User = get_user_model()
 
-#Проверка
 
 class BaseModel(models.Model):
     is_published = models.BooleanField('Опубликовано',
