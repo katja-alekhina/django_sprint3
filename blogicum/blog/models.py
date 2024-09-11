@@ -5,22 +5,22 @@ User = get_user_model()
 
 
 class BaseModel(models.Model):
-    is_published = models.BooleanField(default=True,
-                                       verbose_name='Опубликовано',
+    is_published = models.BooleanField('Опубликовано',
+                                       default=True,
                                        help_text='Снимите галочку, чтобы '
                                        'скрыть публикацию.')
-    created_at = models.DateTimeField(auto_now_add=True,
-                                      verbose_name='Добавлено')
+    created_at = models.DateTimeField('Добавлено',
+                                      auto_now_add=True)
 
     class Meta:
         abstract = True
 
 
 class Category(BaseModel):
-    title = models.CharField(max_length=256, default='-',
-                             verbose_name='Заголовок')
+    title = models.CharField('Заголовок',
+                             max_length=256, default='-')
     description = models.TextField(verbose_name='Описание')
-    slug = models.SlugField(unique=True, verbose_name='Идентификатор',
+    slug = models.SlugField('Идентификатор', unique=True,
                             help_text='Идентификатор страницы для URL; '
                             'разрешены символы латиницы, цифры, дефис и '
                             'подчёркивание.')
@@ -34,8 +34,7 @@ class Category(BaseModel):
 
 
 class Location(BaseModel):
-    name = models.CharField(max_length=256, default='-',
-                            verbose_name='Название места')
+    name = models.CharField('Название места', max_length=256, default='-',)
 
     class Meta:
         verbose_name = 'местоположение'
@@ -47,8 +46,8 @@ class Location(BaseModel):
 
 class Post(BaseModel):
     title = models.CharField(max_length=256, default='-')
-    text = models.TextField(verbose_name='Текст')
-    pub_date = models.DateTimeField(verbose_name='Дата и время публикации',
+    text = models.TextField('Текст')
+    pub_date = models.DateTimeField('Дата и время публикации',
                                     help_text='Если установить дату и время в '
                                     'будущем — можно делать отложенные '
                                     'публикации.')

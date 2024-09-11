@@ -1,6 +1,6 @@
-from django.shortcuts import get_object_or_404, render
 from blog.models import Category, Post
 from django.http import Http404
+from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 
 
