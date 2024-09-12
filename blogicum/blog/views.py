@@ -1,7 +1,7 @@
-from blog.models import Category, Post
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
+from blog.models import Category, Post
 
 NUMBER_POSTS = 5
 
@@ -9,14 +9,13 @@ NUMBER_POSTS = 5
 def get_queryset():
     return Post.objects.filter(
         is_published=True,
-        category__is_published=True
+        category__is_published=True,
+        pub_date__lte=timezone.now()
     )
 
 
 def index(request):
-    post_list = get_queryset().filter(
-        pub_date__lte=timezone.now()
-    )[:NUMBER_POSTS]
+    post_list = get_queryset()[:NUMBER_POSTS]
     context = {'post_list': post_list}
     template = 'blog/index.html'
     return render(request, template, context)
@@ -38,9 +37,7 @@ def category_posts(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug,
                                  is_published=True)
     post_list = get_queryset().filter(
-        category=category,
-        pub_date__lte=timezone.now(),
-    )
+        category=category)
     return render(request, template, {
         'category': category,
         'post_list': post_list
